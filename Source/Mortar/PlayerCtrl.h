@@ -18,10 +18,11 @@ public:
 	AMortarPlayerCtrl();
 
 protected:
-	AMortarCharacter* GetChar();
-	
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
+
+	AMortarCharacter* GetChar();
+	class AMortarLauncher* GetLauncher();
 };
 
 inline AMortarCharacter* AMortarPlayerCtrl::GetChar()

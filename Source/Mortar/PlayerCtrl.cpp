@@ -4,6 +4,8 @@
 #include "Components/InputComponent.h"
 #include "GameFramework/InputSettings.h"
 
+#include "Launcher.h"
+
 AMortarPlayerCtrl::AMortarPlayerCtrl()
 {
 //	LoadConfig(AMortarPlayerCtrl::StaticClass());
@@ -94,4 +96,18 @@ void AMortarPlayerCtrl::SetupInputComponent()
 		});
 		InputComponent->AddActionBinding(MoveTemp(AB));
 	}
+
+	{
+		FInputActionBinding AB("Fire", IE_Pressed);
+		AB.ActionDelegate.GetDelegateForManualSet().BindLambda([this]() {
+			GetLauncher()->Fire();
+		});
+		InputComponent->AddActionBinding(MoveTemp(AB));
+	}
+}
+
+AMortarLauncher* AMortarPlayerCtrl::GetLauncher()
+{
+	auto iter = TActorIterator<AMortarLauncher>(GetWorld());
+	make_sure(*iter) nullptr; else return *iter;
 }

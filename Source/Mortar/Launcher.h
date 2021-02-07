@@ -26,10 +26,20 @@ public:
 	UPROPERTY(Config, VisibleDefaultsOnly, BlueprintReadOnly, Category = Setup)
 	UClass* BallClass;
 
+	/** deg/sec */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Setup)
+	float AzymuthChangeRate = 1.f;
+
+	/** deg/sec */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Setup)
+	float ElevationChangeRate = 1.f;
+
 public:
 	AMortarLauncher();
 
 	void Fire();
+	void ModifyAzimuth(float);
+	void ModifyElevation(float);
 
 protected:
 	virtual void BeginPlay() override;

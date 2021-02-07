@@ -104,6 +104,21 @@ void AMortarPlayerCtrl::SetupInputComponent()
 		});
 		InputComponent->AddActionBinding(MoveTemp(AB));
 	}
+
+	{
+		FInputAxisBinding AB("Azimuth");
+		AB.AxisDelegate.GetDelegateForManualSet().BindLambda([this](float value) {
+			GetLauncher()->ModifyAzimuth(value);
+		});
+		InputComponent->AxisBindings.Emplace(MoveTemp(AB));
+	}
+	{
+		FInputAxisBinding AB("Elevation");
+		AB.AxisDelegate.GetDelegateForManualSet().BindLambda([this](float value) {
+			GetLauncher()->ModifyElevation(value);
+		});
+		InputComponent->AxisBindings.Emplace(MoveTemp(AB));
+	}
 }
 
 AMortarLauncher* AMortarPlayerCtrl::GetLauncher()

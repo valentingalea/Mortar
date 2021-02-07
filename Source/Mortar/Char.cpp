@@ -27,21 +27,25 @@ void AMortarCharacter::BeginPlay()
 
 void AMortarCharacter::MoveForward(float value)
 {
+	if (value == 0.f) return;
 	AddMovementInput(GetActorForwardVector(), value);
 }
 
 void AMortarCharacter::MoveRight(float value)
 {
+	if (value == 0.f) return;
 	AddMovementInput(GetActorRightVector(), value);
 }
 
 void AMortarCharacter::TurnAtRate(float rate)
 {
+	if (rate == 0.f) return;
 	AddControllerYawInput(rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
 }
 
 void AMortarCharacter::LookUpAtRate(float rate)
 {
+	if (rate == 0.f) return;
 	AddControllerPitchInput(rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
 }
 

@@ -47,6 +47,23 @@ void AMortarLauncher::Fire()
 	make_sure(TheBall);
 }
 
+void AMortarLauncher::ModifyAzimuth(float value)
+{
+	if (value == 0.f) return;
+	FRotator R = GetActorRotation();
+	R.Yaw += value * AzymuthChangeRate * GetWorld()->GetDeltaSeconds();
+	SetActorRotation(R);
+}
+
+void AMortarLauncher::ModifyElevation(float value)
+{
+	if (value == 0.f) return;
+	FRotator R = GetBarrel()->GetComponentRotation();
+	R.Roll -= value * ElevationChangeRate * GetWorld()->GetDeltaSeconds();
+	GetBarrel()->SetWorldRotation(R);
+}
+
+
 void AMortarLauncher::BeginPlay()
 {
 	make_sure(BallClass);

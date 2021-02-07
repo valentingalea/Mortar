@@ -14,7 +14,7 @@ enum class ELauncherMode : uint8
 
 class UStaticMeshComponent;
 
-UCLASS(Config = Game)
+UCLASS()
 class AMortarLauncher : public AActor
 {
 	GENERATED_BODY()
@@ -22,9 +22,6 @@ class AMortarLauncher : public AActor
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Setup)
 	ELauncherMode Mode = ELauncherMode::Setup;
-
-	UPROPERTY(Config, VisibleDefaultsOnly, BlueprintReadOnly, Category = Setup)
-	UClass* BallClass;
 
 	/** deg/sec */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Setup)
@@ -34,15 +31,25 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Setup)
 	float ElevationChangeRate = 1.f;
 
+	/** cm/sec */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Setup)
+	float InitialVelocity = 1000.f;
+
+	/** cm/sec */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Setup)
+	float VelocityChangeRate = 500.f;
+
 public:
 	AMortarLauncher();
 
 	void Fire();
 	void ModifyAzimuth(float);
 	void ModifyElevation(float);
+	void ModifyVelocity(float);
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void Tick(float) override;
 
 	class AMortarBall* TheBall;
 	UStaticMeshComponent* GetBarrel();
@@ -54,16 +61,22 @@ protected:
 class USphereComponent;
 class UProjectileMovementComponent;
 
-UCLASS()
+UCLASS(Config = Game)
 class AMortarBall : public AActor
 {
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Projectile)
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Setup)
 	USphereComponent* CollisionComp;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Projectile)
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Setup)
+	UStaticMeshComponent* MeshComp;
+
+	UPROPERTY(Config, VisibleDefaultsOnly, BlueprintReadOnly, Category = Setup)
+	UClass* MeshClass;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Setup)
 	UProjectileMovementComponent* ProjectileMovement;
 
 public:

@@ -119,6 +119,13 @@ void AMortarPlayerCtrl::SetupInputComponent()
 		});
 		InputComponent->AxisBindings.Emplace(MoveTemp(AB));
 	}
+	{
+		FInputAxisBinding AB("Velocity");
+		AB.AxisDelegate.GetDelegateForManualSet().BindLambda([this](float value) {
+			GetLauncher()->ModifyVelocity(value);
+		});
+		InputComponent->AxisBindings.Emplace(MoveTemp(AB));
+	}
 }
 
 AMortarLauncher* AMortarPlayerCtrl::GetLauncher()

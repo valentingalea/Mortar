@@ -125,7 +125,8 @@ AMortarBall::AMortarBall()
 	// calling NewObject() forces to declare an 'outer' and that's a rabbit hole
 	MeshComp = static_cast<UStaticMeshComponent*>(CreateDefaultSubobject("MeshComp", MeshClass,
 		MeshClass, /*bIsRequired =*/ true, /*bTransient*/ false));
-	MeshComp->AttachTo(RootComponent);
+	FAttachmentTransformRules attachmentRules(EAttachmentRule::KeepRelative, false);
+	MeshComp->AttachToComponent(RootComponent, attachmentRules);
 
 	// Use a ProjectileMovementComponent to govern this projectile's movement
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileComp"));
